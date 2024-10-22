@@ -5,7 +5,6 @@ import psutil
 
 app = Flask(__name__)
 
-# Prometheus metrics
 REQUEST_COUNT = Counter('flask_app_request_count', 'Total button clicks')
 REQUEST_TIME = Summary('flask_app_request_processing_seconds', 'Time spent processing requests')
 CPU_USAGE = Gauge('flask_app_cpu_usage', 'CPU Usage')
@@ -19,7 +18,6 @@ def index():
 @REQUEST_TIME.time()
 def click():
     REQUEST_COUNT.inc()
-    # Update CPU and memory usage
     CPU_USAGE.set(psutil.cpu_percent())
     MEMORY_USAGE.set(psutil.virtual_memory().percent)
     return 'Button clicked!'
